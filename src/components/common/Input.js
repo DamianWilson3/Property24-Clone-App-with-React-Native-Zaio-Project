@@ -27,6 +27,8 @@ const styles = {
     fontSize: 18,
     lineHeight: 23,
     flex: 2,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 2,
   },
   labelStyle: {
     fontSize: 15,

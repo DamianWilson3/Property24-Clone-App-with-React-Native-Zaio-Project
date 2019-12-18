@@ -43,7 +43,12 @@ class SignInForm extends Component {
         <CardSection>
           <View style={styles.textContainer}>
             <View style={styles.placeholderStyle} />
-            <Button onPress={this.onSignUpPress}>Sign Up</Button>
+            <Button
+              onPress={this.onSignUpPress}
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{marginLeft: 40, marginRight: 40}}>
+              Sign Up
+            </Button>
           </View>
         </CardSection>
       </Card>

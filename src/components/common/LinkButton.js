@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, TouchableWithoutFeedback} from 'react-native';
 
-const LinkButton = ({onPress, children, color}) => {
+const LinkButton = ({onPress, children, style, TextStyle}) => {
   const {buttonStyle, textStyle} = styles;
 
   return (
-    <TouchableWithoutFeedback onPress={onPress} style={buttonStyle}>
-      <Text style={textStyle}>{children}</Text>
+    <TouchableWithoutFeedback onPress={onPress} style={[buttonStyle, style]}>
+      <Text style={[textStyle, TextStyle]}>{children}</Text>
     </TouchableWithoutFeedback>
   );
 };

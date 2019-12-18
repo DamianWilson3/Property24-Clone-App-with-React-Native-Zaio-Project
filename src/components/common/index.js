@@ -7,3 +7,4 @@ export * from './Spinner';
 export * from './Confirm';
 export * from './TextButton';
 export * from './LinkButton';
+export * from './IconButton';

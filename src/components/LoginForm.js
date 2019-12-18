@@ -12,7 +12,7 @@ import {
 
 class LoginForm extends Component {
   onLoginPress() {
-    Actions.main();
+    Actions.properties();
   }
   //temporary, must use redux
   onSignUpPress() {
@@ -48,7 +48,12 @@ class LoginForm extends Component {
         <CardSection>
           <View style={styles.textContainer}>
             <TextButton>Forgot Password?</TextButton>
-            <Button onPress={this.onLoginPress}>Login</Button>
+            <Button
+              onPress={this.onLoginPress}
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{marginLeft: 40, marginRight: 40}}>
+              Login
+            </Button>
           </View>
         </CardSection>
 
