@@ -9,23 +9,26 @@ class ListItem extends Component {
     Actions.editListing();
   }
   render() {
+    const {Address, Description, Price, ImagePath} = this.props.property;
+    // console.log(JSON.stringify(ImagePath));
+    // var imgString = ImagePath.replace('"', );
+    // console.log(imgString);
+
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View>
           <CardSection style={{justifyContent: 'center', flexDirection: 'row'}}>
             <Image
-              source={require('../img/Properties/1.jpeg')}
+              source={ImagePath}
               style={styles.imgStyle}
               resizeMode="stretch"
             />
           </CardSection>
           <CardSection>
             <View style={styles.textContainerStyle}>
-              <Text style={styles.addressStyle}>
-                1 Salvatore Square, Edgemead, 7441
-              </Text>
-              <Text style={styles.descriptionStyle}>3 Bedroom Villa</Text>
-              <Text style={styles.priceStyle}>R2,400,000</Text>
+              <Text style={styles.addressStyle}>{Address}</Text>
+              <Text style={styles.descriptionStyle}>{Description}</Text>
+              <Text style={styles.priceStyle}>{Price}</Text>
             </View>
           </CardSection>
         </View>

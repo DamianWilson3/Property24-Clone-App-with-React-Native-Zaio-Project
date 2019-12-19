@@ -1,41 +1,52 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, FlatList} from 'react-native';
+//import _ from 'lodash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Actions} from 'react-native-router-flux';
 import {Card} from './common';
 import ListItem from './ListItem';
 
-const Properties = {
-  prop1: {
+const Properties = [
+  {
     Address: '1 Salvatore Square, Edgemead, 7441',
     Description: '3 Bedroom Villa',
-    Price: '$2,400,000',
-    Image: '../img/Properties/1.jpeg',
+    Price: 'R2,400,000',
+    ImagePath: require('../img/Properties/1.jpeg'),
   },
-  prop2: {
+  {
     Address: '69 Dick Way, Sandton, 7491',
     Description: '69 Bedroom Shagpad',
-    Price: '$420,000',
-    Image: '../img/Properties/2.jpg',
+    Price: 'R420,000',
+    ImagePath: require('../img/Properties/2.jpg'),
   },
-  prop3: {
+  {
     Address: '7 Denberry Road, Lancaster, 6969',
     Description: '5 Bedroom Villa',
-    Price: '$7,400,000',
-    Image: '../img/Properties/3.jpg',
+    Price: 'R7,400,000',
+    ImagePath: require('../img/Properties/3.jpg'),
   },
-};
+];
 
 class ViewingForm extends Component {
   onAddPress() {
     Actions.addListing();
   }
 
+  keyExtractor = item => item.Address;
+
+  renderRow({item}) {
+    return <ListItem property={item} />;
+  }
+
   render() {
     return (
       // eslint-disable-next-line react-native/no-inline-styles
       <Card style={{flex: 1}}>
-        <ListItem />
+        <FlatList
+          data={Properties}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderRow}
+        />
         <TouchableOpacity
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
