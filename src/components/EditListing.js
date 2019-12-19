@@ -8,16 +8,27 @@ import {
   IconButton,
   Input,
   LinkButton,
+  Confirm,
 } from './common';
 
 class EditListing extends Component {
+  state = {showModal: false};
+  onDeleteAccept() {
+    return;
+  }
+  onDeleteCancel() {
+    this.setState({showModal: false});
+  }
   render() {
     return (
       <Card>
         <CardSection style={{alignContent: 'space-between'}}>
           <View style={styles.topContainerStyle}>
             <Text style={styles.headingStyle}>Property Images</Text>
-            <LinkButton style={{paddingRight: 15}} TextStyle={{color: 'red'}}>
+            <LinkButton
+              style={{paddingRight: 15}}
+              TextStyle={{color: 'red'}}
+              onPress={() => this.setState({showModal: true})}>
               DELETE
             </LinkButton>
           </View>
@@ -46,6 +57,13 @@ class EditListing extends Component {
             <Button style={{width: 100}}>Submit</Button>
           </View>
         </CardSection>
+        <Confirm
+          visible={this.state.showModal}
+          onAccept={this.onDeleteAccept.bind(this)}
+          onDecline={this.onDeleteCancel.bind(this)}
+          label="Warning">
+          Do you want to delete this property?
+        </Confirm>
       </Card>
     );
   }

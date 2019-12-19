@@ -1,8 +1,30 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Actions} from 'react-native-router-flux';
-import {Card, CardSection, Button} from './common';
+import {Card} from './common';
+import ListItem from './ListItem';
+
+const Properties = {
+  prop1: {
+    Address: '1 Salvatore Square, Edgemead, 7441',
+    Description: '3 Bedroom Villa',
+    Price: '$2,400,000',
+    Image: '../img/Properties/1.jpeg',
+  },
+  prop2: {
+    Address: '69 Dick Way, Sandton, 7491',
+    Description: '69 Bedroom Shagpad',
+    Price: '$420,000',
+    Image: '../img/Properties/2.jpg',
+  },
+  prop3: {
+    Address: '7 Denberry Road, Lancaster, 6969',
+    Description: '5 Bedroom Villa',
+    Price: '$7,400,000',
+    Image: '../img/Properties/3.jpg',
+  },
+};
 
 class ViewingForm extends Component {
   onAddPress() {
@@ -13,9 +35,7 @@ class ViewingForm extends Component {
     return (
       // eslint-disable-next-line react-native/no-inline-styles
       <Card style={{flex: 1}}>
-        <CardSection>
-          <Button onPress={() => Actions.editListing()}>Edit</Button>
-        </CardSection>
+        <ListItem />
         <TouchableOpacity
           // eslint-disable-next-line react-native/no-inline-styles
           style={{

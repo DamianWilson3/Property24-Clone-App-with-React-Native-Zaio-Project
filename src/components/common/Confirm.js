@@ -1,9 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, View, Modal} from 'react-native';
 import {CardSection} from './CardSection';
 import {Button} from './Button';
 
-const Confirm = ({children, visible, onAccept, onDecline}) => {
+const Confirm = ({children, visible, onAccept, onDecline, label}) => {
   const {containerStyle, textStyle, cardSectionStyle} = styles;
   return (
     <Modal
@@ -12,13 +13,22 @@ const Confirm = ({children, visible, onAccept, onDecline}) => {
       animationType="slide"
       onRequestClose={() => {}}>
       <View style={containerStyle}>
+        <CardSection style={{justifyContent: 'center'}}>
+          <Text style={styles.headingStyle}>{label}</Text>
+        </CardSection>
         <CardSection style={cardSectionStyle}>
           <Text style={textStyle}>{children}</Text>
         </CardSection>
 
         <CardSection>
-          <Button onPress={onAccept}>Yes</Button>
-          <Button onPress={onDecline}>No</Button>
+          <View style={styles.buttonContainerStyle}>
+            <Button style={{width: 100}} onPress={onAccept}>
+              Yes
+            </Button>
+            <Button style={{width: 100}} onPress={onDecline}>
+              No
+            </Button>
+          </View>
         </CardSection>
       </View>
     </Modal>
@@ -40,6 +50,15 @@ const styles = {
     position: 'relative',
     flex: 1,
     justifyContent: 'center',
+  },
+  headingStyle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  buttonContainerStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 };
 
