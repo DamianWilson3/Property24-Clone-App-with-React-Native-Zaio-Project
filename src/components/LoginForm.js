@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {Image, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
@@ -22,7 +23,7 @@ class LoginForm extends Component {
   render() {
     return (
       <Card>
-        <CardSection>
+        <CardSection style={{borderColor: '#fff'}}>
           <Image
             source={require('../logo.png')}
             style={styles.imgStyle}
@@ -45,19 +46,18 @@ class LoginForm extends Component {
           <Input label="Password" placeholder="password" secureTextEntry />
         </CardSection>
 
-        <CardSection>
+        <CardSection style={{borderColor: '#fff'}}>
           <View style={styles.textContainer}>
             <TextButton>Forgot Password?</TextButton>
             <Button
               onPress={this.onLoginPress}
-              // eslint-disable-next-line react-native/no-inline-styles
               style={{marginLeft: 40, marginRight: 40}}>
               Login
             </Button>
           </View>
         </CardSection>
 
-        <CardSection>
+        <CardSection style={{borderColor: '#fff'}}>
           <View style={styles.container}>
             <View style={styles.placeholderStyle} />
             <Text> New User?</Text>

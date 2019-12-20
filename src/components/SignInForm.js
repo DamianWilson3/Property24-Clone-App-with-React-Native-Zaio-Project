@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {Image, View, Text} from 'react-native';
 import {Card, CardSection, Input, Button} from './common';
@@ -9,7 +10,7 @@ class SignInForm extends Component {
   render() {
     return (
       <Card>
-        <CardSection>
+        <CardSection style={{borderColor: '#fff'}}>
           <Image
             source={require('../logo.png')}
             style={styles.imgStyle}
@@ -45,7 +46,6 @@ class SignInForm extends Component {
             <View style={styles.placeholderStyle} />
             <Button
               onPress={this.onSignUpPress}
-              // eslint-disable-next-line react-native/no-inline-styles
               style={{marginLeft: 40, marginRight: 40}}>
               Sign Up
             </Button>

@@ -10,9 +10,6 @@ class ListItem extends Component {
   }
   render() {
     const {Address, Description, Price, ImagePath} = this.props.property;
-    // console.log(JSON.stringify(ImagePath));
-    // var imgString = ImagePath.replace('"', );
-    // console.log(imgString);
 
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>

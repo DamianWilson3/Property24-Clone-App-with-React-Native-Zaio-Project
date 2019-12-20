@@ -14,8 +14,8 @@ const Properties = [
     ImagePath: require('../img/Properties/1.jpeg'),
   },
   {
-    Address: '69 Dick Way, Sandton, 7491',
-    Description: '69 Bedroom Shagpad',
+    Address: '12 Fast Lane, Sandton, 7491',
+    Description: '10 Bedroom Mansion',
     Price: 'R420,000',
     ImagePath: require('../img/Properties/2.jpg'),
   },
