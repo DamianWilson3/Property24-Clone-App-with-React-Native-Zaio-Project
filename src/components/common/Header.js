@@ -7,14 +7,18 @@ const Header = props => {
   const {viewStyle} = styles;
   return (
     <View style={viewStyle}>
-      <Image source={require('../../logo.png')} resizeMode="contain" />
+      <Image
+        source={require('../../logo.png')}
+        resizeMode="contain"
+        style={styles.imgStyle}
+      />
     </View>
   );
 };
 
 const styles = {
   viewStyle: {
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
@@ -30,6 +34,7 @@ const styles = {
   },
   imgStyle: {
     flex: 1,
+    margin: 5,
   },
 };
 

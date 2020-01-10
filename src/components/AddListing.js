@@ -1,9 +1,33 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {Card, CardSection, Button, IconButton, Input} from './common';
+import ImagePicker from 'react-native-image-picker';
 
 class AddListing extends Component {
+  state = {
+    photo: null,
+  };
+
+  choosePhoto = () => {
+    const options = {};
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log('response = ', response);
+      if (response.uri) {
+        this.setState({photo: response});
+      }
+    });
+  };
+  takePhoto = () => {
+    const options = {};
+    ImagePicker.launchCamera(options, response => {
+      console.log('response = ', response);
+      if (response.uri) {
+        this.setState({photo: response});
+      }
+    });
+  };
   render() {
+    const {photo} = this.state;
     return (
       <Card>
         <CardSection>
@@ -11,9 +35,20 @@ class AddListing extends Component {
         </CardSection>
         <CardSection>
           <View style={styles.imgContainerStyle}>
+            {photo && (
+              <Image
+                source={{uri: photo.uri}}
+                style={styles.imgStyle}
+                resizeMode="stretch"
+              />
+            )}
             <View style={styles.buttonContainerStyle}>
-              <IconButton icon="ios-camera">TAKE A PHOTO</IconButton>
-              <IconButton icon="ios-image">CHOOSE A PHOTO</IconButton>
+              <IconButton icon="ios-camera" onPress={this.takePhoto}>
+                TAKE A PHOTO
+              </IconButton>
+              <IconButton icon="ios-image" onPress={this.choosePhoto}>
+                CHOOSE A PHOTO
+              </IconButton>
             </View>
           </View>
         </CardSection>
@@ -58,7 +93,6 @@ const styles = {
     borderColor: '#007aff',
 
     flexGrow: 1,
-    justifyContent: 'space-between',
   },
   buttonContainerStyle: {
     flexDirection: 'row',
@@ -80,6 +114,11 @@ const styles = {
     flexDirection: 'row',
 
     justifyContent: 'space-around',
+  },
+  imgStyle: {
+    margin: 10,
+    width: '95%',
+    height: 170,
   },
 };
 

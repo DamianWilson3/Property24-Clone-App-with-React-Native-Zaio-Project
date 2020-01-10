@@ -7,6 +7,7 @@ import ViewingForm from './components/ViewingForm';
 import Profile from './components/Profile';
 import AddListing from './components/AddListing';
 import EditListing from './components/EditListing';
+import {Header} from './components/common';
 
 const RouterComponent = () => {
   return (
@@ -21,6 +22,7 @@ const RouterComponent = () => {
             key="main"
             tabs={true}
             title="Property24"
+            navBar={Header}
             hideBackImage={true}
             tabBarStyle={styles.tabBarStyle}>
             <Scene

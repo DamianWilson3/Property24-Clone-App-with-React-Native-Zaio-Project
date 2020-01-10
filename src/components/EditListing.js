@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import {
   Card,
   CardSection,
@@ -10,9 +10,29 @@ import {
   LinkButton,
   Confirm,
 } from './common';
+import ImagePicker from 'react-native-image-picker';
 
 class EditListing extends Component {
-  state = {showModal: false};
+  state = {showModal: false, photo: null};
+
+  choosePhoto = () => {
+    const options = {};
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log('response = ', response);
+      if (response.uri) {
+        this.setState({photo: response});
+      }
+    });
+  };
+  takePhoto = () => {
+    const options = {};
+    ImagePicker.launchCamera(options, response => {
+      console.log('response = ', response);
+      if (response.uri) {
+        this.setState({photo: response});
+      }
+    });
+  };
   onDeleteAccept() {
     return;
   }
@@ -20,6 +40,7 @@ class EditListing extends Component {
     this.setState({showModal: false});
   }
   render() {
+    const {photo} = this.state;
     return (
       <Card>
         <CardSection style={{alignContent: 'space-between'}}>
@@ -35,9 +56,20 @@ class EditListing extends Component {
         </CardSection>
         <CardSection>
           <View style={styles.imgContainerStyle}>
+            {photo && (
+              <Image
+                source={{uri: photo.uri}}
+                style={styles.imgStyle}
+                resizeMode="stretch"
+              />
+            )}
             <View style={styles.buttonContainerStyle}>
-              <IconButton icon="ios-camera">TAKE A PHOTO</IconButton>
-              <IconButton icon="ios-image">CHOOSE A PHOTO</IconButton>
+              <IconButton icon="ios-camera" onPress={this.takePhoto}>
+                TAKE A PHOTO
+              </IconButton>
+              <IconButton icon="ios-image" onPress={this.choosePhoto}>
+                CHOOSE A PHOTO
+              </IconButton>
             </View>
           </View>
         </CardSection>
@@ -109,6 +141,11 @@ const styles = {
     flexDirection: 'row',
     marginRight: 20,
     justifyContent: 'space-between',
+  },
+  imgStyle: {
+    margin: 10,
+    width: '95%',
+    height: 170,
   },
 };
 export default EditListing;
