@@ -6,6 +6,7 @@ import {Actions} from 'react-native-router-flux';
 
 class ListItem extends Component {
   onRowPress() {
+    //were here, now do edit
     Actions.editListing({property: this.props.property});
   }
   render() {

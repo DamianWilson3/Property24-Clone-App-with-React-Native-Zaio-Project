@@ -18,7 +18,7 @@ class EditListing extends Component {
   choosePhoto = () => {
     const options = {};
     ImagePicker.launchImageLibrary(options, response => {
-      console.log('response = ', response);
+      console.log('response = ', response.uri);
       if (response.uri) {
         this.setState({photo: response});
       }
@@ -27,7 +27,7 @@ class EditListing extends Component {
   takePhoto = () => {
     const options = {};
     ImagePicker.launchCamera(options, response => {
-      console.log('response = ', response);
+      console.log('response = ', response.uri);
       if (response.uri) {
         this.setState({photo: response});
       }
@@ -63,6 +63,13 @@ class EditListing extends Component {
                 resizeMode="stretch"
               />
             )}
+            {!photo && (
+              <Image
+                source={this.props.property.ImagePath}
+                style={styles.imgStyle}
+                resizeMode="stretch"
+              />
+            )}
             <View style={styles.buttonContainerStyle}>
               <IconButton icon="ios-camera" onPress={this.takePhoto}>
                 TAKE A PHOTO
@@ -78,9 +85,9 @@ class EditListing extends Component {
         </CardSection>
         <CardSection>
           <View style={styles.inputContainerStyle}>
-            <Input label="Name" />
-            <Input label="Address" />
-            <Input label="Price" />
+            <Input label="Name" value={this.props.property.Description} />
+            <Input label="Address" value={this.props.property.Address} />
+            <Input label="Price" value={this.props.property.Price} />
           </View>
         </CardSection>
         <CardSection>

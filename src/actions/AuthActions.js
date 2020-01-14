@@ -1,4 +1,4 @@
-//import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -19,4 +19,17 @@ export const passwordChanged = text => {
     type: PASSWORD_CHANGED,
     payload: text,
   };
+};
+
+const loginUserFail = dispatch => {
+  dispatch({type: LOGIN_USER_FAIL});
+};
+
+const loginUserSuccess = (dispatch, user) => {
+  dispatch({
+    type: LOGIN_USER_SUCCESS,
+    payload: user,
+  });
+
+  Actions.main();
 };
