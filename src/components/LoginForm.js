@@ -2,6 +2,8 @@
 import React, {Component} from 'react';
 import {Image, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+import {loginUser, emailChanged, passwordChanged} from '../actions';
 import {
   Card,
   CardSection,
@@ -9,15 +11,51 @@ import {
   Button,
   TextButton,
   LinkButton,
+  Spinner,
 } from './common';
 
 class LoginForm extends Component {
-  onLoginPress() {
-    Actions.properties();
+  onEmailChange(text) {
+    this.props.emailChanged(text);
   }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
+  }
+
+  onLoginPress = () => {
+    //Actions.properties();
+    const {email, password} = this.props;
+    //console.log(this.props);
+    this.props.loginUser({email, password});
+  };
   //temporary, must use redux
   onSignUpPress() {
     Actions.signUp();
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    }
+
+    return (
+      <Button
+        onPress={this.onLoginPress.bind(this)}
+        style={{marginLeft: 40, marginRight: 40}}>
+        Login
+      </Button>
+    );
+  }
+
+  renderError() {
+    if (this.props.error) {
+      return (
+        <View style={{backgroundColor: 'white'}}>
+          <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+        </View>
+      );
+    }
   }
 
   render() {
@@ -39,21 +77,28 @@ class LoginForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Input label="Email" placeholder="JohnDoe@gmail.com" />
+          <Input
+            label="Email"
+            placeholder="JohnDoe@gmail.com"
+            onChangeText={this.onEmailChange.bind(this)}
+            value={this.props.email}
+          />
         </CardSection>
 
         <CardSection>
-          <Input label="Password" placeholder="password" secureTextEntry />
+          <Input
+            label="Password"
+            placeholder="password"
+            secureTextEntry
+            onChangeText={this.onPasswordChange.bind(this)}
+            value={this.props.password}
+          />
         </CardSection>
 
         <CardSection style={{borderColor: '#fff'}}>
           <View style={styles.textContainer}>
             <TextButton>Forgot Password?</TextButton>
-            <Button
-              onPress={this.onLoginPress}
-              style={{marginLeft: 40, marginRight: 40}}>
-              Login
-            </Button>
+            {this.renderButton()}
           </View>
         </CardSection>
 
@@ -64,6 +109,7 @@ class LoginForm extends Component {
             <LinkButton onPress={this.onSignUpPress}>Sign Up</LinkButton>
           </View>
         </CardSection>
+        {this.renderError()}
       </Card>
     );
   }
@@ -96,6 +142,24 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red',
+    padding: 10,
+  },
 };
 
-export default LoginForm;
+const mapStateToProps = state => {
+  return {
+    email: state.auth.email,
+    password: state.auth.password,
+    error: state.auth.error,
+    loading: state.auth.loading,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {emailChanged, passwordChanged, loginUser},
+)(LoginForm);

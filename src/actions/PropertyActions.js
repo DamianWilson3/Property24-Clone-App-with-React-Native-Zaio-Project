@@ -1,0 +1,74 @@
+import {
+  PROPERTY_CREATE,
+  PROPERTY_FETCH_SUCCESS,
+  PROPERTY_SAVE_SUCCESS,
+  PROPERTY_UPDATE,
+} from './types';
+import {Actions} from 'react-native-router-flux';
+import axios from 'axios';
+
+export const propertyUpdate = ({prop, value}) => {
+  return {
+    type: PROPERTY_UPDATE,
+    payload: {prop, value},
+  };
+};
+//img
+export const propertyCreate = ({name, address, price, agent}) => {
+  return dispatch => {
+    axios
+      .post('http://1a234e98.ngrok.io/api/properties/add', {
+        name,
+        address,
+        price,
+        agent,
+        //img,
+      })
+      .then(() => {
+        dispatch({type: PROPERTY_CREATE});
+        Actions.pop();
+      })
+      .catch(err => console.log(err));
+  };
+};
+
+export const propertiesFetch = ({agent}) => {
+  return dispatch => {
+    axios
+      .post('http://1a234e98.ngrok.io/api/properties/getAgents', {
+        agent,
+      })
+      .then(res => {
+        dispatch({type: PROPERTY_FETCH_SUCCESS, payload: res.data});
+      });
+  };
+};
+//img add img to the definition and update NB have to update with all fields
+//maybe send in the whole object for update
+export const propertySave = ({name, address, price, _id, agent}) => {
+  return dispatch => {
+    axios
+      .post(`http://1a234e98.ngrok.io/api/properties/update/${_id}`, {
+        name,
+        address,
+        price,
+        agent,
+      })
+      .then(res => {
+        dispatch({type: PROPERTY_SAVE_SUCCESS});
+        Actions.pop();
+        console.log(res);
+      });
+  };
+};
+
+export const propertyDelete = ({_id}) => {
+  return () => {
+    axios
+      .delete(`http://localhost:5000/api/properties/delete/${_id}`)
+      .then(res => {
+        console.log(res);
+        Actions.pop();
+      });
+  };
+};

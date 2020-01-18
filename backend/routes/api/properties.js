@@ -33,14 +33,13 @@ router.post('/update/:id', (req, res) => {
       property.address = req.body.address;
       property.price = req.body.price;
       property.name = req.body.name;
+      property
+        .save()
+        .then(_property => {
+          res.json(_property);
+        })
+        .catch(err => console.log(err));
     }
-
-    property
-      .save()
-      .then(_property => {
-        res.json(_property);
-      })
-      .catch(err => console.log(err));
   });
 });
 
