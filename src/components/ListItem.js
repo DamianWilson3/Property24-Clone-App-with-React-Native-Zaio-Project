@@ -17,7 +17,7 @@ class ListItem extends Component {
         <View>
           <CardSection style={{justifyContent: 'center', flexDirection: 'row'}}>
             <Image
-              source={ImagePath}
+              source={require('../img/Properties/3.jpg')}
               style={styles.imgStyle}
               resizeMode="stretch"
             />

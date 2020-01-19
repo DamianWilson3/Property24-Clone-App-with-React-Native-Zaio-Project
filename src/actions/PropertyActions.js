@@ -15,9 +15,10 @@ export const propertyUpdate = ({prop, value}) => {
 };
 //img
 export const propertyCreate = ({name, address, price, agent}) => {
+  console.log({name, address, price, agent});
   return dispatch => {
     axios
-      .post('http://1a234e98.ngrok.io/api/properties/add', {
+      .post('https://property24-clone-app.herokuapp.com/api/properties/add', {
         name,
         address,
         price,
@@ -26,7 +27,7 @@ export const propertyCreate = ({name, address, price, agent}) => {
       })
       .then(() => {
         dispatch({type: PROPERTY_CREATE});
-        Actions.pop();
+        Actions.properties();
       })
       .catch(err => console.log(err));
   };
@@ -35,9 +36,12 @@ export const propertyCreate = ({name, address, price, agent}) => {
 export const propertiesFetch = ({agent}) => {
   return dispatch => {
     axios
-      .post('http://1a234e98.ngrok.io/api/properties/getAgents', {
-        agent,
-      })
+      .post(
+        'https://property24-clone-app.herokuapp.com/api/properties/getAgents',
+        {
+          agent,
+        },
+      )
       .then(res => {
         dispatch({type: PROPERTY_FETCH_SUCCESS, payload: res.data});
       });
@@ -46,17 +50,21 @@ export const propertiesFetch = ({agent}) => {
 //img add img to the definition and update NB have to update with all fields
 //maybe send in the whole object for update
 export const propertySave = ({name, address, price, _id, agent}) => {
+  console.log(_id);
   return dispatch => {
     axios
-      .post(`http://1a234e98.ngrok.io/api/properties/update/${_id}`, {
-        name,
-        address,
-        price,
-        agent,
-      })
+      .post(
+        `https://property24-clone-app.herokuapp.com/api/properties/update/${_id}`,
+        {
+          name,
+          address,
+          price,
+          agent,
+        },
+      )
       .then(res => {
         dispatch({type: PROPERTY_SAVE_SUCCESS});
-        Actions.pop();
+        Actions.properties();
         console.log(res);
       });
   };
@@ -65,10 +73,12 @@ export const propertySave = ({name, address, price, _id, agent}) => {
 export const propertyDelete = ({_id}) => {
   return () => {
     axios
-      .delete(`http://localhost:5000/api/properties/delete/${_id}`)
+      .delete(
+        `https://property24-clone-app.herokuapp.com/api/properties/delete/${_id}`,
+      )
       .then(res => {
         console.log(res);
-        Actions.pop();
+        Actions.properties();
       });
   };
 };

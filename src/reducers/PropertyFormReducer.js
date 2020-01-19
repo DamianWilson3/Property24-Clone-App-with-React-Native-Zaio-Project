@@ -8,11 +8,12 @@ const INITIAL_STATE = {
   name: '',
   address: '',
   price: '',
-  agent: '',
+  //agent: '',
   //ImagePath: '',
 };
 
 export default (state = INITIAL_STATE, action) => {
+  console.log(action.type);
   switch (action.type) {
     case PROPERTY_UPDATE:
       //action.payload === {prop: 'name' , value: 'mavis'}

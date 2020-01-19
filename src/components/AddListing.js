@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Text, View, Image} from 'react-native';
 import {Card, CardSection, Button, IconButton, Input} from './common';
 import ImagePicker from 'react-native-image-picker';
+import {connect} from 'react-redux';
+import {propertyCreate, propertyUpdate} from '../actions';
+import {Actions} from 'react-native-router-flux';
 
 class AddListing extends Component {
   state = {
@@ -11,7 +14,7 @@ class AddListing extends Component {
   choosePhoto = () => {
     const options = {};
     ImagePicker.launchImageLibrary(options, response => {
-      console.log('response = ', response);
+      //console.log('response = ', response);
       if (response.uri) {
         this.setState({photo: response});
       }
@@ -20,12 +23,19 @@ class AddListing extends Component {
   takePhoto = () => {
     const options = {};
     ImagePicker.launchCamera(options, response => {
-      console.log('response = ', response);
+      //console.log('response = ', response);
       if (response.uri) {
         this.setState({photo: response});
       }
     });
   };
+
+  onCreatePress = () => {
+    const {name, address, price} = this.props;
+    const agent = this.props.user.email;
+    this.props.propertyCreate({name, address, price, agent});
+  };
+
   render() {
     const {photo} = this.state;
     return (
@@ -57,21 +67,41 @@ class AddListing extends Component {
         </CardSection>
         <CardSection>
           <View style={styles.inputContainerStyle}>
-            <Input label="Name" />
-            <Input label="Address" />
-            <Input label="Price" />
+            <Input
+              label="Name"
+              value={this.props.name}
+              onChangeText={value => {
+                this.props.propertyUpdate({prop: 'name', value});
+              }}
+            />
+            <Input
+              label="Address"
+              value={this.props.address}
+              onChangeText={value => {
+                this.props.propertyUpdate({prop: 'address', value});
+              }}
+            />
+            <Input
+              label="Price"
+              value={this.props.price}
+              onChangeText={value => {
+                this.props.propertyUpdate({prop: 'price', value});
+              }}
+            />
           </View>
         </CardSection>
         <CardSection>
           <View style={styles.bottomButtonContainerStyle}>
             <Button
               // eslint-disable-next-line react-native/no-inline-styles
-              style={{width: 100}}>
+              style={{width: 100}}
+              onPress={() => Actions.pop()}>
               Cancel
             </Button>
             <Button
               // eslint-disable-next-line react-native/no-inline-styles
-              style={{width: 100}}>
+              style={{width: 100}}
+              onPress={this.onCreatePress.bind(this)}>
               Create
             </Button>
           </View>
@@ -122,4 +152,13 @@ const styles = {
   },
 };
 
-export default AddListing;
+const mapStateToProps = state => {
+  const {name, address, price} = state.propertyForm;
+  const user = state.auth.user;
+
+  return {name, address, price, user};
+};
+export default connect(
+  mapStateToProps,
+  {propertyUpdate, propertyCreate},
+)(AddListing);

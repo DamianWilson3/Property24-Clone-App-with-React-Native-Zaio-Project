@@ -11,6 +11,10 @@ import {
   Confirm,
 } from './common';
 import ImagePicker from 'react-native-image-picker';
+import {propertySave, propertyUpdate, propertyDelete} from '../actions';
+import {connect} from 'react-redux';
+import _ from 'lodash';
+import {Actions} from 'react-native-router-flux';
 
 class EditListing extends Component {
   state = {showModal: false, photo: null};
@@ -18,7 +22,7 @@ class EditListing extends Component {
   choosePhoto = () => {
     const options = {};
     ImagePicker.launchImageLibrary(options, response => {
-      console.log('response = ', response.uri);
+      //console.log('response = ', response.uri);
       if (response.uri) {
         this.setState({photo: response});
       }
@@ -27,18 +31,35 @@ class EditListing extends Component {
   takePhoto = () => {
     const options = {};
     ImagePicker.launchCamera(options, response => {
-      console.log('response = ', response.uri);
+      //console.log('response = ', response.uri);
       if (response.uri) {
         this.setState({photo: response});
       }
     });
   };
   onDeleteAccept() {
-    return;
+    const _id = this.props.property._id;
+    this.props.propertyDelete({_id});
+    this.setState({showModal: false});
   }
   onDeleteCancel() {
     this.setState({showModal: false});
   }
+
+  onSubmitPress() {
+    const {name, address, price} = this.props;
+    const agent = this.props.user.email;
+    const _id = this.props.property._id;
+    console.log(this.props.property);
+    this.props.propertySave({name, address, price, _id, agent});
+  }
+
+  componentDidMount() {
+    _.each(this.props.property, (value, prop) => {
+      this.props.propertyUpdate({prop, value});
+    });
+  }
+
   render() {
     const {photo} = this.state;
     return (
@@ -85,15 +106,39 @@ class EditListing extends Component {
         </CardSection>
         <CardSection>
           <View style={styles.inputContainerStyle}>
-            <Input label="Name" value={this.props.property.Description} />
-            <Input label="Address" value={this.props.property.Address} />
-            <Input label="Price" value={this.props.property.Price} />
+            <Input
+              label="Name"
+              value={this.props.name}
+              onChangeText={value => {
+                this.props.propertyUpdate({prop: 'name', value});
+              }}
+            />
+            <Input
+              label="Address"
+              value={this.props.address}
+              onChangeText={value => {
+                this.props.propertyUpdate({prop: 'address', value});
+              }}
+            />
+            <Input
+              label="Price"
+              value={this.props.price}
+              onChangeText={value => {
+                this.props.propertyUpdate({prop: 'price', value});
+              }}
+            />
           </View>
         </CardSection>
         <CardSection>
           <View style={styles.bottomButtonContainerStyle}>
-            <Button style={{width: 100}}>Cancel</Button>
-            <Button style={{width: 100}}>Submit</Button>
+            <Button style={{width: 100}} onPress={() => Actions.pop()}>
+              Cancel
+            </Button>
+            <Button
+              style={{width: 100}}
+              onPress={this.onSubmitPress.bind(this)}>
+              Submit
+            </Button>
           </View>
         </CardSection>
         <Confirm
@@ -155,4 +200,14 @@ const styles = {
     height: 170,
   },
 };
-export default EditListing;
+
+const mapStateToProps = state => {
+  const {name, address, price} = state.propertyForm;
+  const user = state.auth.user;
+
+  return {name, address, price, user};
+};
+export default connect(
+  mapStateToProps,
+  {propertyUpdate, propertySave, propertyDelete},
+)(EditListing);

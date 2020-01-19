@@ -40,7 +40,7 @@ class SignInForm extends Component {
   }
 
   renderButton() {
-    if (this.props.registerLoading) {
+    if (this.props.loading) {
       return <Spinner size="large" />;
     }
 
@@ -54,10 +54,10 @@ class SignInForm extends Component {
   }
 
   renderError() {
-    if (this.props.registerError) {
+    if (this.props.error) {
       return (
         <View style={{backgroundColor: 'white'}}>
-          <Text style={styles.errorTextStyle}>{this.props.registerError}</Text>
+          <Text style={styles.errorTextStyle}>{this.props.error}</Text>
         </View>
       );
     }
@@ -168,8 +168,8 @@ const mapStateToProps = state => {
     regPassword: state.auth.regPassword,
     password2: state.auth.password2,
     name: state.auth.name,
-    error: state.auth.error,
-    loading: state.auth.loading,
+    error: state.auth.registerError,
+    loading: state.auth.registerLoading,
   };
 };
 

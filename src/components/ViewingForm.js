@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, FlatList} from 'react-native';
-//import _ from 'lodash';
+import _ from 'lodash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Actions} from 'react-native-router-flux';
 import {Card} from './common';
@@ -8,26 +8,26 @@ import ListItem from './ListItem';
 import {propertiesFetch} from '../actions';
 import {connect} from 'react-redux';
 
-const Properties = [
-  {
-    address: '1 Salvatore Square, Edgemead, 7441',
-    name: '3 Bedroom Villa',
-    price: 'R2,400,000',
-    ImagePath: require('../img/Properties/1.jpeg'),
-  },
-  {
-    address: '12 Fast Lane, Sandton, 7491',
-    name: '10 Bedroom Mansion',
-    price: 'R420,000',
-    ImagePath: require('../img/Properties/2.jpg'),
-  },
-  {
-    address: '7 Denberry Road, Lancaster, 6969',
-    name: '5 Bedroom Villa',
-    price: 'R7,400,000',
-    ImagePath: require('../img/Properties/3.jpg'),
-  },
-];
+// const Properties = [
+//   {
+//     address: '1 Salvatore Square, Edgemead, 7441',
+//     name: '3 Bedroom Villa',
+//     price: 'R2,400,000',
+//     ImagePath: require('../img/Properties/1.jpeg'),
+//   },
+//   {
+//     address: '12 Fast Lane, Sandton, 7491',
+//     name: '10 Bedroom Mansion',
+//     price: 'R420,000',
+//     ImagePath: require('../img/Properties/2.jpg'),
+//   },
+//   {
+//     address: '7 Denberry Road, Lancaster, 6969',
+//     name: '5 Bedroom Villa',
+//     price: 'R7,400,000',
+//     ImagePath: require('../img/Properties/3.jpg'),
+//   },
+// ];
 
 class ViewingForm extends Component {
   onAddPress() {
@@ -40,9 +40,10 @@ class ViewingForm extends Component {
     return <ListItem property={item} />;
   }
 
-  // componentDidMount() {
-  //   this.props.propertiesFetch(this.props.user.email);
-  // }
+  componentDidMount = () => {
+    this.props.propertiesFetch({agent: this.props.user.email});
+    //console.log(this.props);
+  };
 
   render() {
     return (
@@ -51,7 +52,7 @@ class ViewingForm extends Component {
       // eslint-disable-next-line react-native/no-inline-styles
       <Card style={{flex: 1}}>
         <FlatList
-          data={Properties}
+          data={this.props.properties}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderRow}
         />
@@ -79,8 +80,12 @@ class ViewingForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const properties = state.properties;
-  return {properties};
+  //const properties = state.properties;
+  const properties = _.map(state.properties, (val, num) => {
+    return {...val, num}; // puts objs in array
+  });
+  const user = state.auth.user;
+  return {properties, user};
 };
 
 export default connect(
