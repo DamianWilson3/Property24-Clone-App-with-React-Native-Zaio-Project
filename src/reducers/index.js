@@ -6,5 +6,5 @@ import PropertyReducer from './PropertyReducer';
 export default combineReducers({
   auth: AuthReducer,
   propertyForm: PropertyFormReducer,
-  property: PropertyReducer,
+  properties: PropertyReducer,
 });

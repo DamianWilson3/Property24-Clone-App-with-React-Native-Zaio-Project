@@ -10,7 +10,7 @@ class ListItem extends Component {
     Actions.editListing({property: this.props.property});
   }
   render() {
-    const {Address, Description, Price, ImagePath} = this.props.property;
+    const {address, name, price, ImagePath} = this.props.property;
 
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
@@ -24,9 +24,9 @@ class ListItem extends Component {
           </CardSection>
           <CardSection>
             <View style={styles.textContainerStyle}>
-              <Text style={styles.addressStyle}>{Address}</Text>
-              <Text style={styles.descriptionStyle}>{Description}</Text>
-              <Text style={styles.priceStyle}>{Price}</Text>
+              <Text style={styles.addressStyle}>{address}</Text>
+              <Text style={styles.descriptionStyle}>{name}</Text>
+              <Text style={styles.priceStyle}>{price}</Text>
             </View>
           </CardSection>
         </View>

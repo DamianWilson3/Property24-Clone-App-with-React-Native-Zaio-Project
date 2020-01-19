@@ -9,6 +9,8 @@ import {
   REGISTER_USER,
   REGISTER_USER_FAIL,
   REGISTER_USER_SUCCESS,
+  REG_EMAIL_CHANGED,
+  REG_PASSWORD_CHANGED,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -19,6 +21,8 @@ const INITIAL_STATE = {
   loading: false,
   registerError: '',
   registerLoading: false,
+  regEmail: '',
+  regPassword: '',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,6 +32,12 @@ export default (state = INITIAL_STATE, action) => {
     case EMAIL_CHANGED:
       //make new state object copy to make redux update
       return {...state, email: action.payload};
+
+    case REG_EMAIL_CHANGED:
+      return {...state, regEmail: action.payload};
+
+    case REG_PASSWORD_CHANGED:
+      return {...state, regPassword: action.payload};
 
     case PASSWORD_CHANGED:
       return {...state, password: action.payload};
@@ -69,8 +79,8 @@ export default (state = INITIAL_STATE, action) => {
         user: action.payload,
         registerError: '',
         registerLoading: false,
-        email: '',
-        password: '',
+        regEmail: '',
+        regPassword: '',
         name: '',
         password2: '',
       };

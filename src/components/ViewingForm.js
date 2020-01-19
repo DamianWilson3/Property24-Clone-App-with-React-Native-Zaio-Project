@@ -5,24 +5,26 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Actions} from 'react-native-router-flux';
 import {Card} from './common';
 import ListItem from './ListItem';
+import {propertiesFetch} from '../actions';
+import {connect} from 'react-redux';
 
 const Properties = [
   {
-    Address: '1 Salvatore Square, Edgemead, 7441',
-    Description: '3 Bedroom Villa',
-    Price: 'R2,400,000',
+    address: '1 Salvatore Square, Edgemead, 7441',
+    name: '3 Bedroom Villa',
+    price: 'R2,400,000',
     ImagePath: require('../img/Properties/1.jpeg'),
   },
   {
-    Address: '12 Fast Lane, Sandton, 7491',
-    Description: '10 Bedroom Mansion',
-    Price: 'R420,000',
+    address: '12 Fast Lane, Sandton, 7491',
+    name: '10 Bedroom Mansion',
+    price: 'R420,000',
     ImagePath: require('../img/Properties/2.jpg'),
   },
   {
-    Address: '7 Denberry Road, Lancaster, 6969',
-    Description: '5 Bedroom Villa',
-    Price: 'R7,400,000',
+    address: '7 Denberry Road, Lancaster, 6969',
+    name: '5 Bedroom Villa',
+    price: 'R7,400,000',
     ImagePath: require('../img/Properties/3.jpg'),
   },
 ];
@@ -32,14 +34,20 @@ class ViewingForm extends Component {
     Actions.addListing();
   }
 
-  keyExtractor = item => item.Address;
+  keyExtractor = item => item.address;
 
   renderRow({item}) {
     return <ListItem property={item} />;
   }
 
+  // componentDidMount() {
+  //   this.props.propertiesFetch(this.props.user.email);
+  // }
+
   render() {
     return (
+      //NB BCOS PROPERTIES IS THE VALUE IN INDEX REDUCERS OF PROPERTYREDUCER SO:
+      //chnge to data = this.props.properties
       // eslint-disable-next-line react-native/no-inline-styles
       <Card style={{flex: 1}}>
         <FlatList
@@ -70,5 +78,12 @@ class ViewingForm extends Component {
   }
 }
 
-export default ViewingForm;
-//NB USE TABNAVIGATOR
+const mapStateToProps = state => {
+  const properties = state.properties;
+  return {properties};
+};
+
+export default connect(
+  mapStateToProps,
+  {propertiesFetch},
+)(ViewingForm);

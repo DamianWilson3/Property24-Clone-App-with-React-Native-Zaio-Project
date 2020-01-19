@@ -11,11 +11,27 @@ import {
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
+  REG_EMAIL_CHANGED,
+  REG_PASSWORD_CHANGED,
 } from './types';
 
 export const emailChanged = text => {
   return {
     type: EMAIL_CHANGED,
+    payload: text,
+  };
+};
+
+export const regEmailChanged = text => {
+  return {
+    type: REG_EMAIL_CHANGED,
+    payload: text,
+  };
+};
+
+export const regPasswordChanged = text => {
+  return {
+    type: REG_PASSWORD_CHANGED,
     payload: text,
   };
 };
@@ -45,7 +61,7 @@ export const loginUser = ({email, password}) => {
   return dispatch => {
     dispatch({type: LOGIN_USER});
     axios
-      .post('http://1a234e98.ngrok.io/api/users/login', {
+      .post('https://property24-clone-app.herokuapp.com/api/users/login', {
         email,
         password,
       })
@@ -65,19 +81,26 @@ export const loginUser = ({email, password}) => {
   };
 };
 
-export const registerUser = ({email, password, name, password2, isAgent}) => {
+export const registerUser = ({
+  regEmail,
+  regPassword,
+  name,
+  password2,
+  isAgent,
+}) => {
   return dispatch => {
     dispatch({type: REGISTER_USER});
+    console.log({regEmail, regPassword, name, password2, isAgent});
     axios
-      .post('http://1a234e98.ngrok.io/api/users/register', {
-        email,
-        password,
+      .post('https://property24-clone-app.herokuapp.com/api/users/register', {
+        regEmail,
+        regPassword,
         name,
         password2,
         isAgent,
       })
       .then(res => {
-        console.log(res.data);
+        console.log(res);
         if (res.data.name) {
           registerUserSuccess(dispatch, res.data);
         } else {
@@ -101,7 +124,7 @@ const loginUserSuccess = (dispatch, user) => {
     payload: user,
   });
 
-  Actions.properties();
+  Actions.properties({user});
 };
 
 const registerUserFail = dispatch => {
@@ -114,5 +137,5 @@ const registerUserSuccess = (dispatch, user) => {
     payload: user,
   });
 
-  Actions.properties();
+  Actions.properties({user});
 };

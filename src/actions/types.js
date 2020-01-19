@@ -1,6 +1,8 @@
 //login
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed';
+export const REG_PASSWORD_CHANGED = 'reg_password_changed';
+export const REG_EMAIL_CHANGED = 'reg_email_changed';
 export const NAME_CHANGED = 'name_changed';
 export const PASSWORD2_CHANGED = 'password2_changed';
 export const LOGIN_USER_SUCCESS = 'login_user_success';

@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   name: '',
   address: '',
   price: '',
-  //agent: '',
+  agent: '',
+  //ImagePath: '',
 };
 
 export default (state = INITIAL_STATE, action) => {

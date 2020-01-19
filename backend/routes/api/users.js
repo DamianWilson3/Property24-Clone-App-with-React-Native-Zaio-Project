@@ -17,16 +17,17 @@ router.post('/register', (req, res) => {
   const {errors, isValid} = validateRegisterInput(req.body);
   // Check validation
   if (!isValid) {
+    //console.log('not valid');
     return res.status(400).json(errors);
   }
-  User.findOne({email: req.body.email}).then(user => {
+  User.findOne({email: req.body.regEmail}).then(user => {
     if (user) {
       return res.status(400).json({email: 'Email already exists'});
     } else {
       const newUser = new User({
         name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
+        email: req.body.regEmail,
+        password: req.body.regPassword,
         //new
         isAgent: req.body.isAgent,
       });

@@ -5,20 +5,26 @@ import {Card, CardSection, Input, Button, Spinner} from './common';
 import {connect} from 'react-redux';
 import {
   registerUser,
-  emailChanged,
-  passwordChanged,
+  regEmailChanged,
+  regPasswordChanged,
   nameChanged,
   password2Changed,
 } from '../actions';
 
 class SignInForm extends Component {
   onSignUpPress = () => {
-    const {email, password, password2, name} = this.props;
+    const {regEmail, regPassword, password2, name} = this.props;
 
-    this.props.registerUser({email, password, name, password2, isAgent: true});
+    this.props.registerUser({
+      regEmail,
+      regPassword,
+      name,
+      password2,
+      isAgent: true,
+    });
   };
   onEmailChange(text) {
-    this.props.emailChanged(text);
+    this.props.regEmailChanged(text);
   }
 
   onNameChange(text) {
@@ -26,7 +32,7 @@ class SignInForm extends Component {
   }
 
   onPasswordChange(text) {
-    this.props.passwordChanged(text);
+    this.props.regPasswordChanged(text);
   }
 
   onPassword2Change(text) {
@@ -51,7 +57,7 @@ class SignInForm extends Component {
     if (this.props.registerError) {
       return (
         <View style={{backgroundColor: 'white'}}>
-          <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+          <Text style={styles.errorTextStyle}>{this.props.registerError}</Text>
         </View>
       );
     }
@@ -87,7 +93,7 @@ class SignInForm extends Component {
             label="Email"
             placeholder="JohnDoe@gmail.com"
             onChangeText={this.onEmailChange.bind(this)}
-            value={this.props.email}
+            value={this.props.regEmail}
           />
         </CardSection>
 
@@ -97,7 +103,7 @@ class SignInForm extends Component {
             placeholder="password"
             secureTextEntry
             onChangeText={this.onPasswordChange.bind(this)}
-            value={this.props.password}
+            value={this.props.regPassword}
           />
         </CardSection>
         <CardSection>
@@ -158,8 +164,8 @@ const styles = {
 
 const mapStateToProps = state => {
   return {
-    email: state.auth.email,
-    password: state.auth.password,
+    regEmail: state.auth.regEmail,
+    regPassword: state.auth.regPassword,
     password2: state.auth.password2,
     name: state.auth.name,
     error: state.auth.error,
@@ -169,5 +175,11 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {emailChanged, passwordChanged, registerUser, nameChanged, password2Changed},
+  {
+    regEmailChanged,
+    regPasswordChanged,
+    registerUser,
+    nameChanged,
+    password2Changed,
+  },
 )(SignInForm);
