@@ -22,10 +22,10 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, [action.payload.prop]: action.payload.value};
 
     case PROPERTY_CREATE:
-      return INITIAL_STATE;
+      return {...state, name: '', address: '', price: ''};
 
     case PROPERTY_SAVE_SUCCESS:
-      return INITIAL_STATE;
+      return {...state, name: '', address: '', price: ''};
 
     default:
       return state;

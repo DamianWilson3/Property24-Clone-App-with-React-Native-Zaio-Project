@@ -86,7 +86,7 @@ class EditListing extends Component {
             )}
             {!photo && (
               <Image
-                source={this.props.property.ImagePath}
+                source={this.props.ImagePath}
                 style={styles.imgStyle}
                 resizeMode="stretch"
               />

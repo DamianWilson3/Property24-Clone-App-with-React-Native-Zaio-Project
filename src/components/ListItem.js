@@ -7,7 +7,10 @@ import {Actions} from 'react-native-router-flux';
 class ListItem extends Component {
   onRowPress() {
     //were here, now do edit
-    Actions.editListing({property: this.props.property});
+    Actions.editListing({
+      property: this.props.property,
+      ImagePath: require('../img/Properties/3.jpg'),
+    });
   }
   render() {
     const {address, name, price, ImagePath} = this.props.property;
